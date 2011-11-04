@@ -32,25 +32,25 @@ You have a few options that you can pass to the plug-in. These change basic func
 
 Argument        Description                                                     Default
 --------------------------------------------------------------------------------------------
-method			The scaling method to use, "fit" or "fill".						fit
-				You may also use classNames to invoke the
-				scaling method as well. The object being
-				scaled can have the following classes:
-				  cj_image_scale_fill
-				  cj_image_scale_fit
-				(Classes overide method option.)
-fade			Amount of millisecond to fade in the image						0
-				after scale is complete.
-width			[optional] The amount to scale the width to.					null
-				If not provided, will use destElem or
-				parent width.
-height			[optional] The amount to scale the height to.					null
-				If not provided, will use destElem or
-				parent height.
-destElem		[optional The object to scale into. If not						null
-				providede, will use parent.
-callback		[optional] You can provide a function to be						null
-				called after the scaling is complete.
+method         The scaling method to use, "fit" or "fill".                      fit
+               You may also use classNames to invoke the
+               scaling method as well. The object being
+               scaled can have the following classes:
+                 cj_image_scale_fill
+                 cj_image_scale_fit
+               (Classes overide method option.)
+fade           Amount of millisecond to fade in the image                       0
+               after scale is complete.
+width          [optional] The amount to scale the width to.                     null
+               If not provided, will use destElem or
+               parent width.
+height         [optional] The amount to scale the height to.                    null
+               If not provided, will use destElem or
+               parent height.
+destElem       [optional The object to scale into. If not                       null
+               providede, will use parent.
+callback       [optional] You can provide a function to be                      null
+               called after the scaling is complete.
 
 
 Classes
