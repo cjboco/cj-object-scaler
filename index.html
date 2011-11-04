@@ -1,0 +1,127 @@
+<!doctype html>
+<!--[if lt IE 7 ]><html lang="en" class="no-js ie6"><![endif]-->
+<!--[if IE 7 ]><html lang="en" class="no-js ie7"><![endif]-->
+<!--[if IE 8 ]><html lang="en" class="no-js ie8"><![endif]-->
+<!--[if IE 9 ]><html lang="en" class="no-js ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>CJBoCo - CJ Object Scaler</title>
+<link rel="shortcut icon" href="assets/images/favicon.png">
+<link href="assets/css/demo.css" rel="stylesheet" type="text/css" media="all">
+</head>
+<body>
+<div id="wrapper">
+	<header>
+		<div class="padder">
+			<h1>CJ Object Scaler</h1>
+			<h3>A JQuery Plug-In to Scale Objects to Fit or Fill Within Another Object.</h3>
+		</div>
+	</header>
+	<section>
+		<p><strong>CJ Image Scaler</strong> will scale an object to fit or fill within a destination object. You have two scaling methods to choose from:</p>
+		<ul>
+			<li><strong>Scale To Fit (fit)</strong> - This method will scale the object image to fit the destination object.</li>
+			<li><strong>Scale To Fill (fill)</strong> - This method will scale the source object to completely fill the destination object.</li>
+		</ul>
+		<p>You also have the option to hide the object prior to calculating the scale amount and performing a fade in once the object has been scaled.</p>
+		<p>Take a look at the source code for a better look at what's going on. If you need further explanation of how this plug-in scales things, please take a look at the <a href="http://www.cjboco.com/projects.cfm/project/cj-image/1.0.0/">CJ Image 1.0</a> project which this plug-in is based off of.</p>
+		<h3>Image Example</h3>
+		<p>The function should wait until the images are loaded before attemting to scale anything.</p>
+		<p>Basic usage:<br />
+		<code>$(<em>object</em>).cjObjectScaler(<em>options</em>);</code></p>
+		<ul id="productGrid">
+			<li class="product"><img src="http://www.travelizmo.com/archives/The-North-Face-Met-5-Jacket.JPG" alt="Jacket" class="cj_image_scale_fit" /></li>
+			<li class="product"><img src="http://posterous.com/getfile/files.posterous.com/toniyammine/5WNGHdKOOG2Qhyxol7HATIx4AtA1pWnhH44nOBMLFrpuG5KZTw2hbRwMkWhk/hat002.jpeg" alt="Hat" class="cj_image_scale_fit" /></li>
+			<li class="product"><img src="http://www.wise4living.com/ccoat/images/wool_coat.jpg" alt="Coat" class="cj_image_scale_fit" /></li>
+			<li class="productLink"><a href="demo1.cfm"><img src="http://www.bunnyslippers.com/gfx/products/classic-bunny-slippers-2-lg.jpg" alt="Bunny Slippers" /></a></li>
+		</ul>
+		<br />
+		<h4>HTML Code</h4>
+		<pre><code>&lt;ul id=&quot;productGrid&quot; class=&quot;clearfix&quot;&gt;
+   &lt;li class=&quot;product&quot;&gt;&lt;img src=&quot;http://www.travelizmo.com/archives/The-North-Face-Met-5-Jacket.JPG&quot; alt=&quot;Jacket&quot; class=&quot;cj_image_scale_fit&quot; /&gt;&lt;/li&gt;
+   &lt;li class=&quot;product&quot;&gt;&lt;img src=&quot;http://posterous.com/getfile/files.posterous.com/toniyammine/5WNGHdKOOG2Qhyxol7HATIx4AtA1pWnhH44nOBMLFrpuG5KZTw2hbRwMkWhk/hat002.jpeg&quot; alt=&quot;Hat&quot; class=&quot;cj_image_scale_fit&quot; /&gt;&lt;/li&gt;
+   &lt;li class=&quot;product&quot;&gt;&lt;img src=&quot;http://www.wise4living.com/ccoat/images/wool_coat.jpg&quot; alt=&quot;Coat&quot; class=&quot;cj_image_scale_fit&quot; /&gt;&lt;/li&gt;
+   &lt;li class=&quot;productLink&quot;&gt;&lt;a href=&quot;demo1.cfm&quot;&gt;&lt;img src=&quot;http://www.bunnyslippers.com/gfx/products/classic-bunny-slippers-2-lg.jpg&quot; alt=&quot;Bunny Slippers&quot; /&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+						<h4>jQuery Code</h4>
+						<pre><code>// the first call sets the first 3 LI's
+$(&quot;.product img&quot;).each(function() {
+   $(this).cjObjectScaler({
+      method: &quot;fit&quot;,
+      fade: 1200
+   });
+});
+
+$(&quot;.productLink img&quot;).each(function() {
+   $(this).cjObjectScaler({
+      destElem: $(this).parent().parent(),
+      method: &quot;fill&quot;,
+      fade: 150
+   });
+});</code></pre>
+		<br />
+		<h3>Object Example</h3>
+		<p><strong>CJ Object Scaler</strong> isn't limited to just scaling images. It can also be used to scale any object. Not sure what you would use it for, but it will do it just the same. Also, notice that the function takes in account BORDER width as well.</p>
+		<div id="bigObject">
+			<div id="smallObject"></div>
+		</div>
+		<br />
+		<h4>HTML Code</h4>
+		<pre><code>&lt;div id=&quot;bigObject&quot;&gt;
+   &lt;div id=&quot;smallObject&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+		<h4>jQuery Code</h4>
+		<p>Notice that this example uses a <strong>callback</strong> function to add text to the object once the scaling is complete. (Credit goes to Chris Bellew &lt;Chris.Bellew@luxus.fi&gt; for suggesting this feature. Thanks Chris!)</p>
+		<pre><code>$(&quot;#smallObject&quot;).each(function() {
+   $(this).cjObjectScaler({
+      method: &quot;fit&quot;,
+      fade: 550
+      callback: function() {
+         $(&quot;#smallObject&quot;).html(&quot;Done loading object...&lt;br /&gt;&lt;br /&gt;(Example of the callback function.)&quot;);
+      }
+   });
+});</code></pre>
+		<br />
+	</section>
+	<footer>
+		<div class="padder"> &copy;2011 <a href="http://www.cjboco.com/">Creative Juices Bo. Co.</a> All rights reserved.<br />
+			Licensed under the MIT.</br>
+		</div>
+	</footer>
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script src="assets/js/jquery.cj_object_scaler.js"></script>
+<script>
+(function($) {
+	"use strict";
+
+	$(".product img").each(function() {
+		$(this).cjObjectScaler({
+			fade: 1200
+		});
+	});
+	$(".productLink img").each(function() {
+		$(this).cjObjectScaler({
+			destElem: $(this).parents('.productLink'),
+			method: "fill",
+			fade: 150
+		});
+	});
+	$("#smallObject").each(function() {
+		$(this).cjObjectScaler({
+			method: "fit",
+			fade: 550,
+			callback: function() {
+				$("#smallObject").html("Done loading object...<br /><br />(Example of the callback function.)");
+			}
+		});
+	});
+
+}(jQuery));
+</script>
+</body>
+</html>
