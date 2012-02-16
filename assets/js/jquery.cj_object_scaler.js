@@ -57,6 +57,8 @@
  *
  * Version History
  * --------------------------------------------------------------------------------
+ * 3.0.1 - 02/15/12
+ *		Minor bug fix. Weird plug-in structure
  * 3.0 - 11/04/11
  *		Rewrote plugin structure.
  *		Updated the imagesLoaded plug-in. Previous
@@ -87,9 +89,10 @@
 (function ($) {
 	"use strict";
 
-	$.cjObjectScaler = function ($obj, settings) {
+	$.fn.cjObjectScaler = function (settings) {
 
-		var o = {
+		var $this = $(this),
+			o = {
 				// user defined options
 				method: 'fit',
 				fade: 0,
@@ -110,20 +113,20 @@
 				destH = o.width || o.destElem.height();
 
 				// calculate the CSS styling info, so our offest matches
-				cssW = parseInt($obj.css('borderLeftWidth'), 10) + parseInt($obj.css('borderRightWidth'), 10) +
-					parseInt($obj.css('marginLeft'), 10) + parseInt($obj.css('marginRight'), 10) +
-					parseInt($obj.css('paddingLeft'), 10) + parseInt($obj.css('paddingRight'), 10);
-				cssH = parseInt($obj.css('borderTopWidth'), 10) + parseInt($obj.css('borderBottomWidth'), 10) +
-					parseInt($obj.css('marginTop'), 10) + parseInt($obj.css('marginBottom'), 10) +
-					parseInt($obj.css('paddingTop'), 10) + parseInt($obj.css('paddingBottom'), 10);
+				cssW = parseInt($this.css('borderLeftWidth'), 10) + parseInt($this.css('borderRightWidth'), 10) +
+					parseInt($this.css('marginLeft'), 10) + parseInt($this.css('marginRight'), 10) +
+					parseInt($this.css('paddingLeft'), 10) + parseInt($this.css('paddingRight'), 10);
+				cssH = parseInt($this.css('borderTopWidth'), 10) + parseInt($this.css('borderBottomWidth'), 10) +
+					parseInt($this.css('marginTop'), 10) + parseInt($this.css('marginBottom'), 10) +
+					parseInt($this.css('paddingTop'), 10) + parseInt($this.css('paddingBottom'), 10);
 
 				// check for valid border values. (IE7- takes in account border size, etc. @todo - possible browser check to fix?)
 				cssW = isNaN(cssW) ? 0 : cssW;
 				cssH = isNaN(cssH) ? 0 : cssH;
 
 				// calculate scale ratios
-				ratioX = destW / $obj.width();
-				ratioY = destH / $obj.height();
+				ratioX = destW / $this.width();
+				ratioY = destH / $this.height();
 
 				// Determine which algorithm to use
 				if (o.method === 'fit') {
@@ -135,11 +138,11 @@
 				}
 
 				// calculate our new image dimensions
-				newWidth = Math.ceil($obj.width() * scale, 10) - cssW;
-				newHeight = Math.ceil($obj.height() * scale, 10) - cssH;
+				newWidth = Math.ceil($this.width() * scale, 10) - cssW;
+				newHeight = Math.ceil($this.height() * scale, 10) - cssH;
 
 				// Set new dimensions & offset
-				$obj.css({
+				$this.css({
 					'width': newWidth + 'px',
 					'height': newHeight + 'px',
 					'position': 'absolute',
@@ -152,12 +155,12 @@
 
 				// do our fancy fade in, if user supplied a fade amount
 				if (o.fade > 0) {
-					$obj.fadeIn(o.fade);
+					$this.fadeIn(o.fade);
 				}
 
 				// did the user supply a callback?
 				if ($.isFunction(o.callback)) {
-					o.callback.call($obj);
+					o.callback.call($this);
 				}
 
 				return true;
@@ -173,10 +176,10 @@
 
 			var errmsg = 'Problems initializing cjObjectScaler plug-in.';
 
-			if ($obj[0].nodeName === 'IMG') {
+			if ($this[0].nodeName === 'IMG') {
 
 				// wait until the image is loaded before scaling
-				$obj.hide().imagesLoaded(function () {
+				$this.hide().imagesLoaded(function () {
 					if (!_scale()) {
 						$.error(errmsg);
 					}
@@ -197,14 +200,14 @@
 			// extend our options and store locally
 			o = $.extend(o, settings);
 			if (!o.destElem) {
-				o.destElem = $obj.parent();
+				o.destElem = $this.parent();
 			}
-			if ($obj.hasClass('cj_image_scale_fill')) {
+			if ($this.hasClass('cj_image_scale_fill')) {
 				o.method = 'fill';
-			} else if ($obj.hasClass('cj_image_scale_fit')) {
+			} else if ($this.hasClass('cj_image_scale_fit')) {
 				o.method = 'fit';
 			}
-			$obj.data('options', o);
+			$this.data('options', o);
 
 			// init
 			init();
@@ -216,20 +219,6 @@
 		}
 
 	};
-
-	$.fn.extend({
-
-		cjObjectScaler: function (settings) {
-
-			// call to the plug-in
-			return this.each(function () {
-
-				$.cjObjectScaler($(this), settings);
-
-			});
-
-		}
-	});
 
 }(jQuery));
 
