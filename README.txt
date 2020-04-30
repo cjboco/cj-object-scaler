@@ -22,10 +22,7 @@ You also have the option to hide the object prior to calculating the scale amoun
 performing a fade in once the object has been scaled.
 
 Take a look at the source code for a better look at what's going on. If you need further
-explanation of how this plug-in scales things, please take a look at the CJ Image 1.0
-project (http://www.cjboco.com/projects.cfm/project/cj-image/1.0.0/) which this plug-in
-is based off of.
-
+explanation of how this plug-in scales things, shoot me a message!
 
 User Options
 You have a few options that you can pass to the plug-in. These change basic functionality and are listed below:
